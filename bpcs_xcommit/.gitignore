@@ -1,0 +1,9 @@
+/target
+/.classpath
+/.settings
+/target
+/bin
+/log
+*.jar
+*.class
+*.war

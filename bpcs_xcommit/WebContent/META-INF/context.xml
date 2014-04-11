@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context >
+<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver"
+	maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/HADEV" password="ct4md"
+	type="javax.sql.DataSource" url="jdbc:oracle:thin:@10.10.2.200:1521:HADEV"
+	username="mdtravel" />
+</Context> 

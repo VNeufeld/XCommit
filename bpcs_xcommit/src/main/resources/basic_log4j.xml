@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true"
+	xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	
+	<!--
+		Dieser Log4J-Configuration  wird aus der Anwendung in LoggingFilter geladen :
+		DOMConfigurator.configureAndWatch(path+"paypal_log4j.xml"); 
+		Damit die Console Ausgabe funktioniert folgender Eintrag in run.conf.bat
+		ist notwendig :
+		set JAVA_OPTS= %JAVA_OPTS% -Dorg.jboss.logging.Log4jService.catchSystemOut=false
+		 
+	-->
+
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss,SSS} [%t] %5p %c - %m%n" />
+		</layout>
+	</appender>
+
+
+	<appender name="fileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="append" value="true" />
+		<param name="file" value="D:/temp/log/paypalServlet.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd-HH" /> 		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss,SSS}  %-5p [%t] %c %m%n " />
+		</layout>
+	</appender>
+
+	<!--  dieser Appender funktioniert nicht, wahrscheinlich liegt es daraan, das die paypal.api java.utils.logging verwendet   -->
+	<appender name="fileAppenderPayPal" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="append" value="true" />
+		<param name="file" value="D:/temp/log/paypalApi.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd-HH" /> 		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss,SSS}  %-5p [%t] %c %m%n " />
+		</layout>
+	</appender>
+	
+	<appender name="orgDevelopersLogFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="D:/temp/log/paypal_dev.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss,SSS} [%t] %-5p %c %m%n" />
+		</layout>
+	</appender>
+
+   	<logger name="com.bpcs.paypal" additivity="false">
+		<level value="debug" />
+	    <appender-ref ref="fileAppender"/>
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="com.paypal" additivity="false">
+		<level value="debug" />
+	    <appender-ref ref="fileAppenderPayPal"/>
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	
+	<root>
+		<level value="info" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="fileAppender" />
+	</root>
+
+
+</log4j:configuration>
